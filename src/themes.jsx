@@ -1,7 +1,6 @@
 import { createContext, useState, useMemo } from "react";
 import { createTheme } from "@mui/material/styles"
 
-
 //colors
 export const tokens = (mode) => ({
     ...(mode === 'dark' ? {
@@ -140,23 +139,18 @@ export const themeSettings = (mode) => {
             fontFamily: ["Roboto", "sans-serif"].join(','),
             fontSize: 12,
             h1: {
-                fontFamily: ["Roboto", "sans-serif"].join(','),
                 fontSize: 40
             },
             h2: {
-                fontFamily: ["Roboto", "sans-serif"].join(','),
                 fontSize: 32
             },
             h3: {
-                fontFamily: ["Roboto", "sans-serif"].join(','),
                 fontSize: 24
             },
             h4: {
-                fontFamily: ["Roboto", "sans-serif"].join(','),
                 fontSize: 20
             },
             h5: {
-                fontFamily: ["Roboto", "sans-serif"].join(','),
                 fontSize: 16
             },
 
@@ -166,9 +160,7 @@ export const themeSettings = (mode) => {
 
 //context for color mode 
 export const ColorContext = createContext({
-    toggleColorMode: () => {
-
-    }
+    toggleColorMode: () => { }
 });
 
 export const useMode = () => {
