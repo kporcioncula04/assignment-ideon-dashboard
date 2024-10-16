@@ -6,24 +6,24 @@ import { Box } from '@mui/material';
 import { mockData } from '../../data/mockData';
 
 const columns = [
-    { id: 'uuid', label: 'UUID', minWidth: 150 },
-    { id: 'organization_name', label: 'Organization Name', minWidth: 150 },
+    { id: 'uuid', label: 'UUID', minWidth: 120 },
+    { id: 'organization_name', label: 'Organization Name', minWidth: 120 },
     {
         id: 'carrier',
         label: 'Carrier',
-        minWidth: 150,
+        minWidth: 120,
         align: 'left',
     },
     {
         id: 'account',
         label: 'Account',
-        minWidth: 150,
+        minWidth: 120,
         align: 'left',
     },
     {
         id: 'delivery_config',
         label: 'Delivery Configuration',
-        minWidth: 150,
+        minWidth: 120,
         align: 'left',
     },
 ];
@@ -45,8 +45,11 @@ export default function StickyHeadTable() {
 
     return (
         <Box style={{ border: '1px solid white', }}>
-            <h1>Coverage Periods</h1>
-            <button>Filters</button>
+            <Box>
+                <h1>Coverage Periods</h1>
+                <button>Filters</button>
+            </Box>
+
             <CustomTable
                 columns={columns}
                 rows={mockData}

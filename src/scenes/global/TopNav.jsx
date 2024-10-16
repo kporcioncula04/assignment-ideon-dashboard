@@ -9,9 +9,6 @@ import ModeNightOutlinedIcon from '@mui/icons-material/ModeNightOutlined';
 import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 
-// const useQuery = () => {
-//     return new URLSearchParams(useLocation().search);
-// };
 
 function TopNav() {
     const theme = useTheme();
@@ -33,7 +30,6 @@ function TopNav() {
 
     return (
         <Box display="flex" justifyContent="space-between" p={2}>
-            {/* todo: make this dynamic */}
             <Box><p>{getPageTitle()}</p></Box>
             <Box display="flex" >
                 <IconButton onClick={selectThemeMode.toggleColorMode}>

@@ -45,15 +45,16 @@ function SideNav() {
     return (
         <Box sx={{
             "& .pro-sidebar > .pro-sidebar-inner": {
-                height: '100%',  // Ensure the sidebar takes the full height
-                overflowY: 'hidden !important',  // Hide vertical scrollbar
+                height: '100%',
+                overflowY: 'hidden !important',
+                background: colors.blue[500]
             },
             "& .pro-sidebar-inner > .pro-sidebar-layout": {
-                overflowY: 'scroll !important', // Allow scrolling in this layout
-                height: '100%', // Ensure the layout takes the full height
-                scrollbarWidth: 'none', // For Firefox
+                overflowY: 'scroll !important',
+                height: '100%',
+                scrollbarWidth: 'none',
                 '&::-webkit-scrollbar': {
-                    display: 'none', // For Chrome, Safari, and Opera
+                    display: 'none',
                 },
             },
         }}>
@@ -212,7 +213,7 @@ function SideNav() {
                         icon={isCollapsed ? <ArrowBackIosNewOutlinedIcon /> : undefined}
                         style={{
                             margin: "10px 0 20px 0",
-                            color: colors.black[500],
+                            color: colors.white[500],
                         }}
                     >
                         {!isCollapsed && (
@@ -223,7 +224,7 @@ function SideNav() {
                                 ml="15px"
                             >
                                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
-                                    <ArrowBackIosNewOutlinedIcon />
+                                    <ArrowBackIosNewOutlinedIcon style={{ color: colors.white[500] }} />
                                 </IconButton>
                             </Box>
                         )}

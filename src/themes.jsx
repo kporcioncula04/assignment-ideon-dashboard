@@ -96,7 +96,6 @@ export const tokens = (mode) => ({
     })
 })
 
-
 //mui theme settings
 export const themeSettings = (mode) => {
     const colors = tokens(mode);
@@ -105,18 +104,18 @@ export const themeSettings = (mode) => {
             mode: mode,
             ...(mode === 'dark' ? {
                 primary: {
-                    main: colors.blue[500]
+                    main: colors.blue[800]
                 },
                 secondary: {
-                    main: colors.black[500]
+                    main: colors.blue[700]
                 },
                 neutral: {
-                    dark: colors.black[700],
-                    main: colors.black[500],
-                    light: colors.black[100]
+                    dark: colors.blue[700],
+                    main: colors.blue[500],
+                    light: colors.blue[100]
                 },
                 background: {
-                    default: colors.black[500]
+                    default: colors.blue[500]
                 }
             } : {
                 primary: {
@@ -131,7 +130,7 @@ export const themeSettings = (mode) => {
                     light: colors.white[100]
                 },
                 background: {
-                    default: colors.white[900]
+                    default: colors.white[500]
                 }
             })
         },
@@ -164,7 +163,7 @@ export const ColorContext = createContext({
 });
 
 export const useMode = () => {
-    const [mode, setMode] = useState("dark")
+    const [mode, setMode] = useState("light")
     const colorMode = useMemo(
         () => ({
             toggleColorMode: () =>
