@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { ColorContext, useMode } from './themes'
 import { CssBaseline, ThemeProvider } from '@mui/material'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import TopNav from './scenes/global/TopNav';
 import SideNav from './scenes/global/SideNav'
-import Dashboard from './scenes/dashboard';
-import CoveragePeriods from './scenes/dashboard'
+import CustomerDashboard from './scenes/customerDashboard';
+import CoveragePeriods from './scenes/customerDashboard'
 // todo: implement other pages
 // import EnrollmentTasks from './scenes/dashboard'
 // import CustomerTickerts from './scenes/dashboard'
@@ -23,7 +23,7 @@ function App() {
             <main className="main">
               <TopNav />
               <Routes>
-                <Route path="/" element={<Dashboard />} />
+                <Route path="/" element={<Navigate to="/coveragePeriods" />} />
                 {/* <Route path="/enrollment" element={<EnrollmentTasks />} /> */}
                 <Route path="/coveragePeriods" element={<CoveragePeriods />} />
                 {/* <Route path="/customerTickets" element={<CustomerTickerts />} />
