@@ -5,11 +5,12 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import TopNav from './scenes/global/TopNav';
 import SideNav from './scenes/global/SideNav'
 import CustomerDashboard from './scenes/customerDashboard';
-import CoveragePeriods from './scenes/customerDashboard'
+// import CoveragePeriods from './scenes/customerDashboard'
 // todo: implement other pages
 // import EnrollmentTasks from './scenes/dashboard'
 // import CustomerTickerts from './scenes/dashboard'
 // import PreCoveragePeriods from './scenes/dashboard'
+import CoveragePeriods from './scenes/coveragePeriods'
 
 function App() {
   const [theme, colorMode] = useMode();
