@@ -1,35 +1,26 @@
 import * as React from 'react';
+
 import CustomTable from '../../components/CustomTable';
-import { Box, Button, TextField, Drawer } from '@mui/material';
-import { ColorContext, tokens } from '../../themes'
-import { useContext, useState } from 'react'
-import { useTheme } from '@mui/material';
 import FilterDrawer from '../../components/FilterDrawer';
-
-import './index.css'
-
 import { mockData } from '../../data/mockData';
+import './index.css'
+import { ColorContext, tokens } from '../../themes'
+
+import { useTheme } from '@mui/material';
+import { Box, Button, TextField, Drawer } from '@mui/material';
+import { useContext, useState } from 'react'
 
 const columns = [
     { id: 'uuid', label: 'UUID', minWidth: 120 },
     { id: 'organization_name', label: 'Organization Name', minWidth: 120 },
     {
-        id: 'carrier',
-        label: 'Carrier',
-        minWidth: 120,
-        align: 'left',
+        id: 'carrier', label: 'Carrier', minWidth: 120, align: 'left',
     },
     {
-        id: 'account',
-        label: 'Account',
-        minWidth: 120,
-        align: 'left',
+        id: 'account', label: 'Account', minWidth: 120, align: 'left',
     },
     {
-        id: 'delivery_config',
-        label: 'Delivery Configuration',
-        minWidth: 120,
-        align: 'left',
+        id: 'delivery_config', label: 'Delivery Configuration', minWidth: 120, align: 'left',
     },
 ];
 
@@ -43,6 +34,9 @@ export default function StickyHeadTable() {
     //pagination
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [isDrawerOpen, setDrawerOpen] = useState(false);
+    const [filteredRows, setFilteredRows] = useState(rows)
+
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -54,19 +48,20 @@ export default function StickyHeadTable() {
     };
 
     //filter
-    const [isDrawerOpen, setDrawerOpen] = useState(false);
-    const [filteredRows, setFilteredRows] = useState(rows)
-
-
     const toggleDrawer = (open) => (event) => {
         setDrawerOpen(open);
     };
 
-    const handleApplyFilter = (filterValue) => {
-        const filteredData = rows.filter((row) =>
-            row.organization_name.toLowerCase().includes(filterValue.toLowerCase()) ||
-            row.carrier.toLowerCase().includes(filterValue.toLowerCase())
-        );
+    const handleApplyFilter = (filters) => {
+        const { selectedOrganizations = [], selectedCarriers = [], distributionFormat = '' } = filters;
+
+        const filteredData = rows.filter((row) => {
+            const orgMatch = selectedOrganizations.length === 0 || selectedOrganizations.includes(row.organization_name);
+            const carrierMatch = selectedCarriers.length === 0 || selectedCarriers.includes(row.carrier);
+            const formatMatch = !distributionFormat || row.distribution_format === distributionFormat;
+
+            return orgMatch && carrierMatch && formatMatch;
+        });
         setFilteredRows(filteredData);
     };
 
