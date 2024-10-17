@@ -4,6 +4,7 @@ import { Box, Button, TextField, Drawer } from '@mui/material';
 import { ColorContext, tokens } from '../../themes'
 import { useContext, useState } from 'react'
 import { useTheme } from '@mui/material';
+import FilterDrawer from '../../components/FilterDrawer';
 
 import './index.css'
 
@@ -39,7 +40,6 @@ export default function StickyHeadTable() {
     const colors = tokens.apply(theme.palette.mode);
     // const selectThemeMode = useContext(ColorContext);
 
-
     //pagination
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -56,23 +56,18 @@ export default function StickyHeadTable() {
     //filter
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [filteredRows, setFilteredRows] = useState(rows)
-    const [filterValue, setFilterValue] = useState('')
+
 
     const toggleDrawer = (open) => (event) => {
         setDrawerOpen(open);
     };
 
-    const handleFilterChange = (event) => {
-        setFilterValue(event.target.value);
-    };
-
-    const applyFilter = () => {
+    const handleApplyFilter = (filterValue) => {
         const filteredData = rows.filter((row) =>
             row.organization_name.toLowerCase().includes(filterValue.toLowerCase()) ||
             row.carrier.toLowerCase().includes(filterValue.toLowerCase())
         );
         setFilteredRows(filteredData);
-        setDrawerOpen(false)
     };
 
     return (
@@ -91,20 +86,11 @@ export default function StickyHeadTable() {
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
 
-            <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer(false)}>
-                <Box sx={{ width: 300, padding: '20px' }}>
-                    <h2>Filter Data</h2>
-                    <TextField
-                        fullWidth
-                        label="Filter by Organization or Carrier"
-                        variant="outlined"
-                        value={filterValue}
-                        onChange={handleFilterChange}
-                        sx={{ marginBottom: 2 }}
-                    />
-                    <Button variant="contained" onClick={applyFilter} fullWidth>Apply Filter</Button>
-                </Box>
-            </Drawer>
+            <FilterDrawer
+                isDrawerOpen={isDrawerOpen}
+                toggleDrawer={toggleDrawer}
+                onApplyFilter={handleApplyFilter}
+            />
         </Box>
 
     );
