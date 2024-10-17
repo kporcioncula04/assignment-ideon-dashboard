@@ -47,7 +47,18 @@ export const tokens = (mode) => ({
             700: "#0c0e16",
             800: "#080a0e",
             900: "#040507"
-        }
+        },
+        gray: {
+            100: "#fafafa",
+            200: "#f5f5f5",
+            300: "#efefef",
+            400: "#eaeaea",
+            500: "#e5e5e5",
+            600: "#b7b7b7",
+            700: "#898989",
+            800: "#5c5c5c",
+            900: "#2e2e2e"
+        },
     } : {
         black: {
             100: "#070708",
@@ -92,7 +103,18 @@ export const tokens = (mode) => ({
             700: "#72747c",
             800: "#a1a3a7",
             900: "#d0d1d3",
-        }
+        },
+        gray: {
+            100: "#2e2e2e",
+            200: "#5c5c5c",
+            300: "#898989",
+            400: "#b7b7b7",
+            500: "#e5e5e5",
+            600: "#eaeaea",
+            700: "#efefef",
+            800: "#f5f5f5",
+            900: "#fafafa",
+        },
     })
 })
 
@@ -119,10 +141,10 @@ export const themeSettings = (mode) => {
                 }
             } : {
                 primary: {
-                    main: colors.white[500]
+                    main: colors.white[100]
                 },
                 secondary: {
-                    main: colors.white[600]
+                    main: colors.white[200]
                 },
                 neutral: {
                     dark: colors.white[700],
