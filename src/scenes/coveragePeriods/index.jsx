@@ -9,19 +9,14 @@ import { ColorContext, tokens } from '../../themes'
 import { useTheme } from '@mui/material';
 import { Box, Button, TextField, Drawer } from '@mui/material';
 import { useContext, useState } from 'react'
+import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 
 const columns = [
     { id: 'uuid', label: 'UUID', minWidth: 120 },
     { id: 'organization_name', label: 'Organization Name', minWidth: 120 },
-    {
-        id: 'carrier', label: 'Carrier', minWidth: 120, align: 'left',
-    },
-    {
-        id: 'account', label: 'Account', minWidth: 120, align: 'left',
-    },
-    {
-        id: 'delivery_config', label: 'Delivery Configuration', minWidth: 120, align: 'left',
-    },
+    { id: 'carrier', label: 'Carrier', minWidth: 120, align: 'left' },
+    { id: 'account', label: 'Account', minWidth: 120, align: 'left' },
+    { id: 'delivery_config', label: 'Delivery Configuration', minWidth: 120, align: 'left' },
 ];
 
 const rows = mockData
@@ -32,11 +27,17 @@ export default function StickyHeadTable() {
     // const selectThemeMode = useContext(ColorContext);
 
     //pagination
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
     const [isDrawerOpen, setDrawerOpen] = useState(false);
-    const [filteredRows, setFilteredRows] = useState(rows)
-
+    const [filteredRows, setFilteredRows] = useState(rows);
+    const [selectedFilters, setSelectedFilters] = useState({
+        selectedOrg: [],
+        selectedCarriers: [],
+        distributionFormat: '',
+        selectStartDate: '',
+        dateStartType: ''
+    })
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -53,23 +54,55 @@ export default function StickyHeadTable() {
     };
 
     const handleApplyFilter = (filters) => {
-        const { selectedOrganizations = [], selectedCarriers = [], distributionFormat = '' } = filters;
+        const { selectedOrg = [], selectedCarriers = [], distributionFormat = '', selectStartDate = '' } = filters;
+        let formattedDate = null;
 
         const filteredData = rows.filter((row) => {
-            const orgMatch = selectedOrganizations.length === 0 || selectedOrganizations.includes(row.organization_name);
+            const orgMatch = selectedOrg.length === 0 || selectedOrg.includes(row.organization_name);
             const carrierMatch = selectedCarriers.length === 0 || selectedCarriers.includes(row.carrier);
-            const formatMatch = !distributionFormat || row.distribution_format === distributionFormat;
+            // const formatMatch = !distributionFormat || row.distribution_format === distributionFormat;
 
-            return orgMatch && carrierMatch && formatMatch;
+            let dateMatch = true;
+            if (selectStartDate) {
+                const startDate = new Date(selectStartDate);
+                formattedDate = `${(startDate.getMonth() + 1).toString().padStart(2, '0')}.${startDate.getDate().toString().padStart(2, '0')}.${startDate.getFullYear().toString()}`;
+                const rowDate = new Date(row.delivery_config);
+                dateMatch = rowDate >= startDate;
+            }
+
+            return orgMatch && carrierMatch && dateMatch;
+
         });
+        // Set the formatted date to selectStartDate (or whatever you need)
+        if (formattedDate) {
+            filters.selectStartDate = formattedDate;
+        }
+
         setFilteredRows(filteredData);
+        setSelectedFilters(filters);
+
     };
 
     return (
         <Box style={{ border: '1px solid white', borderRadius: '4px', background: colors.white[900], padding: '20px', margin: '20px' }}>
             <Box>
                 <h1>Coverage Periods</h1>
-                <Button variant="contained" onClick={toggleDrawer(true)} >Filters</Button>
+                <Button variant="outlined" onClick={toggleDrawer(true)}> <FilterAltOutlinedIcon />Filters</Button>
+
+                <Box style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                    <p>Company: {selectedFilters.selectedOrg?.length > 0
+                        ? selectedFilters.selectedOrg.join(', ')
+                        : 'None'} </p>
+                    <p>Carriers: {selectedFilters.selectedCarriers?.length > 0
+                        ? selectedFilters.selectedCarriers.join(', ')
+                        : 'None'} </p>
+                    <p>Distribution Format: {selectedFilters.distributionFormat?.length > 0
+                        ? selectedFilters.distributionFormat.join(', ')
+                        : 'None'} </p>
+                    <p>Coverage Start Date: {selectedFilters.dateStartType} {selectedFilters.selectStartDate?.length > 0
+                        ? selectedFilters.selectStartDate
+                        : 'None'} </p>
+                </Box>
             </Box>
 
             <CustomTable
@@ -86,6 +119,7 @@ export default function StickyHeadTable() {
                 toggleDrawer={toggleDrawer}
                 onApplyFilter={handleApplyFilter}
             />
+
         </Box>
 
     );
