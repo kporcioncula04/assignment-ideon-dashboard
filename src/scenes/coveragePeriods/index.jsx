@@ -3,6 +3,7 @@ import * as React from 'react';
 import CustomTable from '../../components/CustomTable';
 import FilterDrawer from '../../components/FilterDrawer';
 import { mockData } from '../../data/mockData';
+import { columnsHeader } from '../../data/columsHeader'
 import './index.css'
 import { ColorContext, tokens } from '../../themes'
 
@@ -11,14 +12,8 @@ import { Box, Button, TextField, Drawer } from '@mui/material';
 import { useContext, useState } from 'react'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 
-const columns = [
-    { id: 'uuid', label: 'UUID', minWidth: 120 },
-    { id: 'organization_name', label: 'Organization Name', minWidth: 120 },
-    { id: 'carrier', label: 'Carrier', minWidth: 120, align: 'left' },
-    { id: 'account', label: 'Account', minWidth: 120, align: 'left' },
-    { id: 'delivery_config', label: 'Delivery Configuration', minWidth: 120, align: 'left' },
-];
 
+const columns = columnsHeader
 const rows = mockData
 
 export default function StickyHeadTable() {
@@ -36,7 +31,9 @@ export default function StickyHeadTable() {
         selectedCarriers: [],
         distributionFormat: '',
         selectStartDate: '',
-        dateStartType: ''
+        selectEndDate: '',
+        dateStartType: '',
+        dateEndType: ''
     })
 
     const handleChangePage = (event, newPage) => {
@@ -54,28 +51,44 @@ export default function StickyHeadTable() {
     };
 
     const handleApplyFilter = (filters) => {
-        const { selectedOrg = [], selectedCarriers = [], distributionFormat = '', selectStartDate = '' } = filters;
-        let formattedDate = null;
+        const { selectedOrg = [], selectedCarriers = [], distributionFormat = '', selectStartDate = '', selectEndDate = '' } = filters;
+        let formattedStartDate = null;
+        let formattedEndDate = null;
 
         const filteredData = rows.filter((row) => {
             const orgMatch = selectedOrg.length === 0 || selectedOrg.includes(row.organization_name);
             const carrierMatch = selectedCarriers.length === 0 || selectedCarriers.includes(row.carrier);
             // const formatMatch = !distributionFormat || row.distribution_format === distributionFormat;
 
-            let dateMatch = true;
+            let dateStartMatch = true;
+            let dateEndMatch = true;
+
+
             if (selectStartDate) {
                 const startDate = new Date(selectStartDate);
-                formattedDate = `${(startDate.getMonth() + 1).toString().padStart(2, '0')}.${startDate.getDate().toString().padStart(2, '0')}.${startDate.getFullYear().toString()}`;
-                const rowDate = new Date(row.delivery_config);
-                dateMatch = rowDate >= startDate;
+                formattedStartDate = `${(startDate.getMonth() + 1).toString().padStart(2, '0')}.${startDate.getDate().toString().padStart(2, '0')}.${startDate.getFullYear().toString()}`;
+                const rowStartDate = new Date(row.delivery_config);
+                dateStartMatch = rowStartDate >= startDate;
             }
 
-            return orgMatch && carrierMatch && dateMatch;
+            if (selectEndDate) {
+                const endDate = new Date(selectEndDate);
+                console.log('end', endDate)
+                formattedEndDate = `${(endDate.getMonth() + 1).toString().padStart(2, '0')}.${endDate.getDate().toString().padStart(2, '0')}.${endDate.getFullYear().toString()}`;
+                const rowEndDate = new Date(row.delivery_config);
+                dateEndMatch = rowEndDate >= endDate;
+            }
+
+            return orgMatch && carrierMatch && dateStartMatch && dateEndMatch;
 
         });
         // Set the formatted date to selectStartDate (or whatever you need)
-        if (formattedDate) {
-            filters.selectStartDate = formattedDate;
+        if (formattedStartDate) {
+            filters.selectStartDate = formattedStartDate;
+        }
+
+        if (formattedEndDate) {
+            filters.selectEndDate = formattedEndDate;
         }
 
         setFilteredRows(filteredData);
@@ -89,20 +102,26 @@ export default function StickyHeadTable() {
                 <h1>Coverage Periods</h1>
                 <Button variant="outlined" onClick={toggleDrawer(true)}> <FilterAltOutlinedIcon />Filters</Button>
 
-                <Box style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                    <p>Company: {selectedFilters.selectedOrg?.length > 0
-                        ? selectedFilters.selectedOrg.join(', ')
-                        : 'None'} </p>
-                    <p>Carriers: {selectedFilters.selectedCarriers?.length > 0
-                        ? selectedFilters.selectedCarriers.join(', ')
-                        : 'None'} </p>
-                    <p>Distribution Format: {selectedFilters.distributionFormat?.length > 0
-                        ? selectedFilters.distributionFormat.join(', ')
-                        : 'None'} </p>
-                    <p>Coverage Start Date: {selectedFilters.dateStartType} {selectedFilters.selectStartDate?.length > 0
-                        ? selectedFilters.selectStartDate
-                        : 'None'} </p>
-                </Box>
+                {(selectedFilters.selectedOrg?.length > 0 || selectedFilters.selectedCarriers?.length > 0 ||
+                    selectedFilters.distributionFormat || selectedFilters.selectStartDate || selectedFilters.selectEndDate) &&
+                    <Box style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                        <p>Company: {selectedFilters.selectedOrg?.length > 0
+                            ? selectedFilters.selectedOrg.join(', ')
+                            : 'None'} </p>
+                        <p>Carriers: {selectedFilters.selectedCarriers?.length > 0
+                            ? selectedFilters.selectedCarriers.join(', ')
+                            : 'None'} </p>
+                        <p>Distribution Format: {selectedFilters.distributionFormat?.length > 0
+                            ? selectedFilters.distributionFormat.join(', ')
+                            : 'None'} </p>
+                        <p>Coverage Start Date: {selectedFilters.dateStartType} {selectedFilters.selectStartDate?.length > 0
+                            ? selectedFilters.selectStartDate
+                            : 'None'} </p>
+                        <p>Coverage End Date: {selectedFilters.dateEndType} {selectedFilters.selectEndDate?.length > 0
+                            ? selectedFilters.selectEndDate
+                            : 'None'} </p>
+                    </Box>}
+
             </Box>
 
             <CustomTable
