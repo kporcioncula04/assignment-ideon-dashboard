@@ -82,7 +82,7 @@ function FiltersApply({ selectedOrg,
                     <Box>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker value={selectStartDate}
-                                onChange={setStartDate} />
+                                onChange={(newValue) => setStartDate(newValue)} />
                         </LocalizationProvider>
                     </Box>
                 </Box>
@@ -90,7 +90,7 @@ function FiltersApply({ selectedOrg,
 
             <FormControl sx={{ m: 1, minWidth: 120 }}>
                 <FormLabel>Coverage End Date</FormLabel>
-                {console.log('end', selectEndDate)}
+                {/* {console.log('end', selectEndDate)} */}
 
                 <Box sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
                     <Box>
@@ -106,6 +106,8 @@ function FiltersApply({ selectedOrg,
 
                     <Box>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            {console.log('end', selectEndDate)}
+
                             <DatePicker value={selectEndDate}
                                 onChange={setEndDate} />
                         </LocalizationProvider>

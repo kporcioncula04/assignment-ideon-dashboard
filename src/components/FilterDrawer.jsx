@@ -118,9 +118,6 @@ function FilterDrawer({ isDrawerOpen, toggleDrawer, onApplyFilter }) {
                 }
 
             </Box>
-
-
-
         </Drawer >
     )
 }
