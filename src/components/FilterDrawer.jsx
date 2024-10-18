@@ -92,6 +92,8 @@ function FilterDrawer({ isDrawerOpen, toggleDrawer, onApplyFilter }) {
                 <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                     <Button variant="outlined" onClick={() => setCurrentView('filters')}>Filters</Button>
                     <Button variant="outlined" onClick={() => setCurrentView('saved')} >Saved Filters</Button>
+                    {console.log('setstart', setStartDate)}
+                    {console.log('setstart', selectStartDate)}
                 </Box>
 
 
@@ -111,6 +113,8 @@ function FilterDrawer({ isDrawerOpen, toggleDrawer, onApplyFilter }) {
                             selectedCarriers={selectedCarriers}
                             distributionFormat={distributionFormat}
                             selectStartDate={selectStartDate}
+                            setStartDate={setStartDate}
+                            setEndDate={setEndDate}
                             dateStartType={dateStartType}
                             selectEndDate={selectEndDate}
                             dateEndType={dateEndType} />

@@ -73,7 +73,6 @@ export default function StickyHeadTable() {
 
             if (selectEndDate) {
                 const endDate = new Date(selectEndDate);
-                console.log('end', endDate)
                 formattedEndDate = `${(endDate.getMonth() + 1).toString().padStart(2, '0')}.${endDate.getDate().toString().padStart(2, '0')}.${endDate.getFullYear().toString()}`;
                 const rowEndDate = new Date(row.delivery_config);
                 dateEndMatch = rowEndDate >= endDate;

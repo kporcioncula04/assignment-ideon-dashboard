@@ -3,6 +3,8 @@ import { Box, FormControl, FormLabel, Select, MenuItem, Checkbox, ListItemText, 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { TextField } from '@mui/material';
+
 
 function FiltersApply({ selectedOrg,
     handleOrganizationSelectChange,
@@ -66,7 +68,7 @@ function FiltersApply({ selectedOrg,
 
             <FormControl sx={{ m: 1, minWidth: 120 }}>
                 <FormLabel>Coverage Start Date</FormLabel>
-
+                {console.log(typeof setStartDate)};
                 <Box sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
                     <Box>
                         <Select native value={dateStartType} onChange={handleStartDateTypeChange} sx={{ minWidth: '150px' }}>
@@ -82,7 +84,10 @@ function FiltersApply({ selectedOrg,
                     <Box>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker value={selectStartDate}
-                                onChange={(newValue) => setStartDate(newValue)} />
+                                onChange={setStartDate}
+                                slots={{ textField: (params) => <TextField {...params} /> }}
+                            />
+
                         </LocalizationProvider>
                     </Box>
                 </Box>
@@ -109,7 +114,8 @@ function FiltersApply({ selectedOrg,
                             {console.log('end', selectEndDate)}
 
                             <DatePicker value={selectEndDate}
-                                onChange={setEndDate} />
+                                onChange={setEndDate}
+                                slots={{ textField: (params) => <TextField {...params} /> }} />
                         </LocalizationProvider>
                     </Box>
                 </Box>
