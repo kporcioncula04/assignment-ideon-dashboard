@@ -29,11 +29,20 @@ function FilterDrawer({ isDrawerOpen, toggleDrawer, onApplyFilter }) {
     };
 
     const handleSaveFilterName = (newFilter) => {
+        const filterExists = savedFilters.some((filter) => filter.name === newFilter.name);
+        if (filterExists) {
+            alert("A filter with this name already exists. Please choose a different name.");
+            return; // Exit if the name already exists
+        }
 
-        const updatedFilters = savedFilters.map((filter) => ({
-            ...filter,
-            default: false
-        }))
+        let updatedFilters = savedFilters;
+        if (newFilter.default) {
+            updatedFilters = savedFilters.map((filter) => ({
+                ...filter,
+                default: false
+            }))
+        }
+
         setSavedFilters([...updatedFilters, newFilter])
         // setCurrentView('filters')
     }

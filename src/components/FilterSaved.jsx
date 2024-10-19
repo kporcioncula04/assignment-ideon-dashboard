@@ -20,12 +20,12 @@ function FilterSaved({ handleSaveFilterName, savedFilters }) {
   }
   return (
     <Box
-      sx={{ '& > :not(style)': { m: 1, width: '25ch', display: 'flex' } }}
+      sx={{ '& > :not(style)': { m: 1, width: '300', display: 'flex' } }}
       noValidate
       autoComplete="off"
     >
       <p>Name</p>
-      <TextField variant="outlined" value={filterName} onChange={(e) => setFilterName(e.target.value)} />
+      <TextField variant="outlined" value={filterName} onChange={(e) => setFilterName(e.target.value)} style={{ width: '300px' }} />
 
       <FormGroup>
         <FormControlLabel control={<Checkbox
