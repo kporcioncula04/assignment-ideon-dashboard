@@ -3,38 +3,46 @@ import TextField from '@mui/material/TextField';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Button from '@mui/material/Checkbox';
+import Button from '@mui/material/Button';
 import { useState } from 'react';
 
 
-function FilterSaved({ onSave }) {
+function FilterSaved({ handleSaveFilterName, savedFilters }) {
   const [filterName, setFilterName] = useState('');
-  const [setAsDefault, setSetAsDefault] = useState(false); // Checkbox for default filter
-  const [savedFilters, setSavedFilters] = useState([])
+  const [defaultFilter, setDefaultFilter] = useState(false); // Checkbox for default filter
 
   const handleSave = () => {
+    const filterLabel = defaultFilter ? `${filterName} (default)` : filterName
     const savedFilter = {
-      name: filterName,
-      default: setAsDefault
+      name: filterLabel,
+      default: defaultFilter
     }
-    onSave(savedFilter)
+    handleSaveFilterName(savedFilter)
   }
   return (
     <Box
-      component="form"
       sx={{ '& > :not(style)': { m: 1, width: '25ch', display: 'flex' } }}
       noValidate
       autoComplete="off"
     >
       <p>Name</p>
-      <TextField id="outlined-basic" variant="outlined" />
+      <TextField variant="outlined" value={filterName} onChange={(e) => setFilterName(e.target.value)} />
 
       <FormGroup>
-        <FormControlLabel control={<Checkbox defaultChecked checked={setAsDefault} onChange={(e) => setAsDefault(e.target.value)} />} label="Set as default filter" />
+        <FormControlLabel control={<Checkbox
+          checked={defaultFilter}
+          onChange={(e) => setDefaultFilter(e.target.checked)} />} label="Set as default filter" />
       </FormGroup>
 
       <Button variant="contained" onClick={handleSave}>Save</Button>
-
+      <h2>Saved Filters</h2>
+      <ul style={{ display: 'flex', flexDirection: 'column' }}>
+        {savedFilters.map((filter, index) => (
+          <li key={index}>
+            <strong>{filter.name}</strong>
+          </li>
+        ))}
+      </ul>
     </Box>
   )
 }

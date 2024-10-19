@@ -25,7 +25,8 @@ function FiltersApply({ selectedOrg,
     handleReset,
     applyFilter,
     isSaveFilterOpen,
-    FilterSaved }) {
+    FilterSaved,
+    saveFilter }) {
 
     const dateStartOptions = [
         { value: 'before', label: 'Before' },
@@ -68,7 +69,6 @@ function FiltersApply({ selectedOrg,
 
             <FormControl sx={{ m: 1, minWidth: 120 }}>
                 <FormLabel>Coverage Start Date</FormLabel>
-                {console.log(typeof setStartDate)};
                 <Box sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
                     <Box>
                         <Select native value={dateStartType} onChange={handleStartDateTypeChange} sx={{ minWidth: '150px' }}>
@@ -111,8 +111,6 @@ function FiltersApply({ selectedOrg,
 
                     <Box>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            {console.log('end', selectEndDate)}
-
                             <DatePicker value={selectEndDate}
                                 onChange={setEndDate}
                                 slots={{ textField: (params) => <TextField {...params} /> }} />
@@ -167,7 +165,7 @@ function FiltersApply({ selectedOrg,
                 </Select>
             </FormControl>
             <Box sx={{ display: 'flex', alignItems: 'right', justifyContent: 'right' }}>
-                <Button variant="contained" onClick={handleSaveFilter} style={{ width: '45%' }}>Save filter</Button>
+                <Button variant="contained" onClick={saveFilter} style={{ width: '45%' }}>Save filter</Button>
                 {isSaveFilterOpen && <FilterSaved />}
             </Box>
 

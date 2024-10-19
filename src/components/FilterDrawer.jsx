@@ -1,18 +1,7 @@
-import {
-    Box, Button, TextField, Drawer, Select,
-    MenuItem, Checkbox, ListItemText, FormControl, InputLabel
-} from '@mui/material';
+import { Box, Button, Drawer } from '@mui/material';
 import { useState } from 'react';
-// import OutlinedInput from '@mui/material/OutlinedInput';
 import { mockData } from '../data/mockData';
-// import Radio from '@mui/material/Radio';
-// import RadioGroup from '@mui/material/RadioGroup';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import FormLabel from '@mui/material/FormLabel';
 
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import FilterSaved from './FilterSaved';
 import FiltersApply from './FiltersApply'
@@ -32,11 +21,21 @@ function FilterDrawer({ isDrawerOpen, toggleDrawer, onApplyFilter }) {
 
     const [currentView, setCurrentView] = useState('filters')
     const [savedFilters, setSavedFilters] = useState([])
+    const [currentFilter, setCurrentFilter] = useState(null)
 
-
-    const handleSaveFilter = (newFilter) => {
-        setIsSaveFilterOpen((prev) => [...prev, newFilter]); // Open the save filter component or tab
+    const handleSaveFilter = (filters) => {
+        setCurrentFilter(filters)
+        setCurrentView('saved')
     };
+
+    // const onApplyFilter = (filters) => {
+    //     console.log('applying filter:', filters)
+    // }
+
+    const handleSaveFilterName = (savedFilter) => {
+        setSavedFilters((prev) => [...prev, savedFilter])
+        setCurrentView('filters')
+    }
 
     const handleOrganizationSelectChange = (event) => {
         const { value } = event.target;
@@ -67,6 +66,19 @@ function FilterDrawer({ isDrawerOpen, toggleDrawer, onApplyFilter }) {
         toggleDrawer(false)();
     };
 
+    const saveFilter = () => {
+        const filters = {
+            selectedOrg,
+            selectedCarriers,
+            distributionFormat,
+            selectStartDate,
+            dateStartType,
+            selectEndDate,
+            dateEndType
+        }
+        handleSaveFilter(filters)
+    }
+
     const handleReset = () => {
         setSelectedCarriers([])
         setSelectedOrg([])
@@ -92,10 +104,7 @@ function FilterDrawer({ isDrawerOpen, toggleDrawer, onApplyFilter }) {
                 <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                     <Button variant="outlined" onClick={() => setCurrentView('filters')}>Filters</Button>
                     <Button variant="outlined" onClick={() => setCurrentView('saved')} >Saved Filters</Button>
-                    {console.log('setstart', setStartDate)}
-                    {console.log('setstart', selectStartDate)}
                 </Box>
-
 
                 {
                     currentView === 'filters' ? (
@@ -117,8 +126,11 @@ function FilterDrawer({ isDrawerOpen, toggleDrawer, onApplyFilter }) {
                             setEndDate={setEndDate}
                             dateStartType={dateStartType}
                             selectEndDate={selectEndDate}
-                            dateEndType={dateEndType} />
-                    ) : (<FilterSaved savedFilters={savedFilters} />)
+                            dateEndType={dateEndType}
+                            saveFilter={saveFilter} />
+                    ) : (<FilterSaved onApplyFilter={onApplyFilter}
+                        handleSaveFilterName={handleSaveFilterName}
+                        savedFilters={savedFilters} />)
                 }
 
             </Box>
