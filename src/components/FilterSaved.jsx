@@ -12,9 +12,8 @@ function FilterSaved({ handleSaveFilterName, savedFilters }) {
   const [defaultFilter, setDefaultFilter] = useState(false); // Checkbox for default filter
 
   const handleSave = () => {
-    const filterLabel = defaultFilter ? `${filterName} (default)` : filterName
     const savedFilter = {
-      name: filterLabel,
+      name: filterName,
       default: defaultFilter
     }
     handleSaveFilterName(savedFilter)
@@ -39,7 +38,7 @@ function FilterSaved({ handleSaveFilterName, savedFilters }) {
       <ul style={{ display: 'flex', flexDirection: 'column' }}>
         {savedFilters.map((filter, index) => (
           <li key={index}>
-            <strong>{filter.name}</strong>
+            <strong>{filter.name}</strong>{filter.default && "(default)"}
           </li>
         ))}
       </ul>

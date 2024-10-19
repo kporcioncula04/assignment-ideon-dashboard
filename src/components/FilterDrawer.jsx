@@ -28,13 +28,14 @@ function FilterDrawer({ isDrawerOpen, toggleDrawer, onApplyFilter }) {
         setCurrentView('saved')
     };
 
-    // const onApplyFilter = (filters) => {
-    //     console.log('applying filter:', filters)
-    // }
+    const handleSaveFilterName = (newFilter) => {
 
-    const handleSaveFilterName = (savedFilter) => {
-        setSavedFilters((prev) => [...prev, savedFilter])
-        setCurrentView('filters')
+        const updatedFilters = savedFilters.map((filter) => ({
+            ...filter,
+            default: false
+        }))
+        setSavedFilters([...updatedFilters, newFilter])
+        // setCurrentView('filters')
     }
 
     const handleOrganizationSelectChange = (event) => {
