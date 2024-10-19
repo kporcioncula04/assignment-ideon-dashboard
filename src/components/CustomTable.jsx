@@ -11,7 +11,7 @@ const CustomTable = ({ columns, rows, page, rowsPerPage, onPageChange, onRowsPer
   const selectThemeMode = useContext(ColorContext);
 
   return (
-    <TableContainer sx={{ maxHeight: 440, border: 'lightgray', borderRadius: '10px' }}>
+    <TableContainer sx={{ maxHeight: 440, border: '1px solid lightgray', borderRadius: '10px' }}>
       <Table stickyHeader aria-label="sticky table">
         <TableHead >
           <TableRow>
@@ -19,7 +19,7 @@ const CustomTable = ({ columns, rows, page, rowsPerPage, onPageChange, onRowsPer
               <TableCell
                 key={column.id}
                 align={column.align}
-                style={{ minWidth: column.minWidth, border: '1px solid gray' }}
+                style={{ minWidth: column.minWidth, border: '0.2px solid lightgray' }}
               >
                 {column.label}
               </TableCell>
@@ -31,7 +31,7 @@ const CustomTable = ({ columns, rows, page, rowsPerPage, onPageChange, onRowsPer
           {rows
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((row) => (
-              <TableRow hover tabIndex={-1} key={row.uuid} sx={{ border: '1px solid white' }}>
+              <TableRow hover tabIndex={-1} key={row.uuid} sx={{ border: '1px solid white', borderRadius: '5px' }}>
                 {columns.map((column) => {
                   let value = row[column.id];
                   if (column.id === 'uuid') {
@@ -39,7 +39,7 @@ const CustomTable = ({ columns, rows, page, rowsPerPage, onPageChange, onRowsPer
                   }
 
                   return (
-                    <TableCell key={`${row.uuid}-${column.id}`} align={column.align} style={{ border: '0.5px solid gray' }}>
+                    <TableCell key={`${row.uuid}-${column.id}`} align={column.align} style={{ border: '0.5px solid lightgray' }}>
                       {column.id === 'uuid' ? (
                         <div className='uuid-container'>
                           <span>

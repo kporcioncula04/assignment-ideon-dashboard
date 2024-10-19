@@ -98,8 +98,12 @@ export default function StickyHeadTable() {
     return (
         <Box style={{ border: '1px solid white', borderRadius: '4px', background: colors.white[900], padding: '20px', margin: '20px' }}>
             <Box>
-                <h1>Coverage Periods</h1>
-                <Button variant="outlined" onClick={toggleDrawer(true)} sx={{ paddingBottom: '5px' }}> <FilterAltOutlinedIcon />Filters</Button>
+                <Box>
+                    <h1 style={{ marginTop: '0px' }}>Coverage Periods</h1>
+                </Box>
+                <Box style={{ paddingBottom: '10px' }}>
+                    <Button variant="outlined" onClick={toggleDrawer(true)} sx={{ paddingBottom: '5px' }}> <FilterAltOutlinedIcon />Filters</Button>
+                </Box>
 
                 {(selectedFilters.selectedOrg?.length > 0 || selectedFilters.selectedCarriers?.length > 0 ||
                     selectedFilters.distributionFormat || selectedFilters.selectStartDate || selectedFilters.selectEndDate) &&
