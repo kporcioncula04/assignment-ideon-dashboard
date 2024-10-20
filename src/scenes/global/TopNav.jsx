@@ -9,7 +9,6 @@ import ModeNightOutlinedIcon from '@mui/icons-material/ModeNightOutlined';
 import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 
-
 function TopNav() {
     const theme = useTheme();
     const colors = tokens.apply(theme.palette.mode);
@@ -33,12 +32,11 @@ function TopNav() {
             <Box><p>{getPageTitle()}</p></Box>
             <Box display="flex" >
                 <IconButton onClick={selectThemeMode.toggleColorMode}>
-                    {theme.palette.mode === 'dark' ? (
+                    {theme.palette.mode === 'light' ? (
                         <ModeNightOutlinedIcon />
                     ) : <WbSunnyOutlinedIcon />}
                 </IconButton>
                 <IconButton><NotificationsOutlinedIcon /></IconButton>
-                {/* todo:  */}
                 <IconButton> <PortraitOutlinedIcon /></IconButton>
 
                 <IconButton sx={{ display: 'flex', alignItems: 'center' }}>

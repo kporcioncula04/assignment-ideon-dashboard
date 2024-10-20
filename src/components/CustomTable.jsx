@@ -1,21 +1,26 @@
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TablePagination, useTheme, MenuItem, Select, Box } from '@mui/material';
-import { useContext } from 'react'
-import { ColorContext, tokens } from '../themes'
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
-import '../index.css'
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, useTheme, MenuItem, Select, Box } from '@mui/material';
+import { tokens } from '../themes'
+import { Pagination, Stack } from '@mui/material';
 
+import '../index.css'
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 
 const CustomTable = ({ columns, rows, page, rowsPerPage, onPageChange, onRowsPerPageChange }) => {
   const theme = useTheme();
   const colors = tokens.apply(theme.palette.mode);
-  const selectThemeMode = useContext(ColorContext);
-
   return (
-    <TableContainer className="table-container">
+    <TableContainer className="table-container" sx={{
+      '& .MuiTableCell-root': {
+        color: theme.palette.mode === 'light' ? colors.black[500] : colors.white[500], // Adjust text color based on mode
+      },
+    }}>
       <Table stickyHeader aria-label="sticky table">
-        <TableHead >
+        <TableHead sx={{
+          '& .MuiTableCell-head': {
+            backgroundColor: theme.palette.mode === 'light' ? colors.gray[600] : colors.gray[400],
+            color: theme.palette.mode === 'light' ? colors.black[200] : colors.black[500],
+          }
+        }} >
           <TableRow>
             {columns.map((column) => (
               <TableCell
@@ -29,7 +34,14 @@ const CustomTable = ({ columns, rows, page, rowsPerPage, onPageChange, onRowsPer
           </TableRow>
         </TableHead>
 
-        <TableBody>
+        <TableBody sx={{
+          '& .MuiTableRow-root': {
+            backgroundColor: theme.palette.mode === 'light' ? colors.white[900] : colors.blue[500],
+            '&:hover': {
+              backgroundColor: theme.palette.mode === 'light' ? colors.white[500] : colors.gray[200],
+            },
+          }
+        }}>
           {rows
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((row) => (
@@ -41,7 +53,7 @@ const CustomTable = ({ columns, rows, page, rowsPerPage, onPageChange, onRowsPer
                   }
 
                   return (
-                    <TableCell key={`${row.uuid}-${column.id}`} align={column.align} className='table-cell'>
+                    <TableCell key={`${row.uuid}-${column.id}`} align={column.align} className='table-cell' >
                       {column.id === 'uuid' ? (
                         <div className='uuid-container' style={{ color: '#990099' }}>
                           <span>
@@ -81,7 +93,7 @@ const CustomTable = ({ columns, rows, page, rowsPerPage, onPageChange, onRowsPer
         />
       </Stack>
 
-    </TableContainer>
+    </TableContainer >
   );
 };
 
