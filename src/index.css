@@ -15,3 +15,26 @@ body,
 }
 
 /* todo webkit scrollbar */
+
+/* Custom Table CSS */
+.table-container {
+  max-height: 440;
+  border: 1px solid lightgray;
+  border-radius: 10px
+}
+
+.table-row {
+  border: 1px solid white;
+  border-radius: 5px
+}
+
+.table-cell {
+  border: 0.5px solid lightgray
+}
+
+.select-pagination {
+  margin-left: 10px;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  height: 35px
+}

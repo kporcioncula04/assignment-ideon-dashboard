@@ -1,25 +1,32 @@
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TablePagination } from '@mui/material';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, useTheme, MenuItem, Select, Box } from '@mui/material';
+import { tokens } from '../themes'
+import { Pagination, Stack } from '@mui/material';
 
-import { Box, IconButton, useTheme } from '@mui/material'
-import { useContext } from 'react'
-import { ColorContext, tokens } from '../themes'
+import '../index.css'
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 
 const CustomTable = ({ columns, rows, page, rowsPerPage, onPageChange, onRowsPerPageChange }) => {
   const theme = useTheme();
   const colors = tokens.apply(theme.palette.mode);
-  const selectThemeMode = useContext(ColorContext);
-
   return (
-    <TableContainer sx={{ maxHeight: 440, border: 'lightgray', borderRadius: '10px' }}>
+    <TableContainer className="table-container" sx={{
+      '& .MuiTableCell-root': {
+        color: theme.palette.mode === 'light' ? colors.black[500] : colors.white[500], // Adjust text color based on mode
+      },
+    }}>
       <Table stickyHeader aria-label="sticky table">
-        <TableHead >
+        <TableHead sx={{
+          '& .MuiTableCell-head': {
+            backgroundColor: theme.palette.mode === 'light' ? colors.gray[600] : colors.gray[400],
+            color: theme.palette.mode === 'light' ? colors.black[200] : colors.black[500],
+          }
+        }} >
           <TableRow>
             {columns.map((column) => (
               <TableCell
                 key={column.id}
                 align={column.align}
-                style={{ minWidth: column.minWidth, border: '1px solid gray' }}
+                style={{ minWidth: column.minWidth, border: '0.2px solid lightgray' }}
               >
                 {column.label}
               </TableCell>
@@ -27,19 +34,26 @@ const CustomTable = ({ columns, rows, page, rowsPerPage, onPageChange, onRowsPer
           </TableRow>
         </TableHead>
 
-        <TableBody>
+        <TableBody sx={{
+          '& .MuiTableRow-root': {
+            backgroundColor: theme.palette.mode === 'light' ? colors.white[800] : colors.blue[500],
+            '&:hover': {
+              backgroundColor: theme.palette.mode === 'light' ? colors.white[500] : colors.gray[400],
+            },
+          }
+        }}>
           {rows
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((row) => (
-              <TableRow hover tabIndex={-1} key={row.uuid} sx={{ border: '1px solid white' }}>
+              <TableRow hover tabIndex={-1} key={row.uuid} className='table-row'>
                 {columns.map((column) => {
                   let value = row[column.id];
                   if (column.id === 'uuid') {
-                    value = value.substring(0, 5); // Trim UUID to first 5 characters
+                    value = value.substring(0, 5);
                   }
 
                   return (
-                    <TableCell key={`${row.uuid}-${column.id}`} align={column.align} style={{ border: '0.5px solid gray' }}>
+                    <TableCell key={`${row.uuid}-${column.id}`} align={column.align} className='table-cell' >
                       {column.id === 'uuid' ? (
                         <div className='uuid-container'>
                           <span>
@@ -57,16 +71,29 @@ const CustomTable = ({ columns, rows, page, rowsPerPage, onPageChange, onRowsPer
         </TableBody>
       </Table>
 
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={onPageChange}
-        onRowsPerPageChange={onRowsPerPageChange}
-      />
-    </TableContainer>
+      <Stack spacing={2} direction="row" justifyContent="flex-end" alignItems="center" padding="5px">
+        <Box>
+          <label>Show:</label>
+          <Select value={rowsPerPage} onChange={onRowsPerPageChange} className='select-pagination'>
+            <MenuItem value={5}>5</MenuItem>
+            <MenuItem value={10}>10</MenuItem>
+            <MenuItem value={25}>25</MenuItem>
+          </Select>
+        </Box>
+        <Pagination sx={{
+          '& .MuiPaginationItem-root': {
+            color: '#990099',
+          },
+          '& .Mui-selected': {
+            backgroundColor: 'lightgray',
+            color: '#fff',
+          },
+        }} count={Math.ceil(rows.length / rowsPerPage)}
+          page={page} onChange={onPageChange} defaultPage={1} siblingCount={1} boundaryCount={1}
+        />
+      </Stack>
+
+    </TableContainer >
   );
 };
 

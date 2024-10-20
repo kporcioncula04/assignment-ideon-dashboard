@@ -1,4 +1,26 @@
 .uuid-container {
     display: flex;
     align-items: center;
+    color: #990099;
+}
+
+.main-containter {
+    border: 1px solid white;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 20px
+}
+
+.main-header {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+.filter-box {
+    margin-bottom: 10px;
+}
+
+.function-buttons {
+    height: 37px;
+    min-width: 40px;
 }
