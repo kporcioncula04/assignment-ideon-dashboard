@@ -1,9 +1,11 @@
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TablePagination } from '@mui/material';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
-
-import { Box, IconButton, useTheme } from '@mui/material'
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TablePagination, useTheme, MenuItem, Select, Box } from '@mui/material';
 import { useContext } from 'react'
 import { ColorContext, tokens } from '../themes'
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+import '../index.css'
+
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 
 const CustomTable = ({ columns, rows, page, rowsPerPage, onPageChange, onRowsPerPageChange }) => {
   const theme = useTheme();
@@ -11,7 +13,7 @@ const CustomTable = ({ columns, rows, page, rowsPerPage, onPageChange, onRowsPer
   const selectThemeMode = useContext(ColorContext);
 
   return (
-    <TableContainer sx={{ maxHeight: 440, border: '1px solid lightgray', borderRadius: '10px' }}>
+    <TableContainer className="table-container">
       <Table stickyHeader aria-label="sticky table">
         <TableHead >
           <TableRow>
@@ -31,17 +33,17 @@ const CustomTable = ({ columns, rows, page, rowsPerPage, onPageChange, onRowsPer
           {rows
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((row) => (
-              <TableRow hover tabIndex={-1} key={row.uuid} sx={{ border: '1px solid white', borderRadius: '5px' }}>
+              <TableRow hover tabIndex={-1} key={row.uuid} className='table-row'>
                 {columns.map((column) => {
                   let value = row[column.id];
                   if (column.id === 'uuid') {
-                    value = value.substring(0, 5); // Trim UUID to first 5 characters
+                    value = value.substring(0, 5);
                   }
 
                   return (
-                    <TableCell key={`${row.uuid}-${column.id}`} align={column.align} style={{ border: '0.5px solid lightgray' }}>
+                    <TableCell key={`${row.uuid}-${column.id}`} align={column.align} className='table-cell'>
                       {column.id === 'uuid' ? (
-                        <div className='uuid-container'>
+                        <div className='uuid-container' style={{ color: '#990099' }}>
                           <span>
                             <FileCopyIcon style={{ fontSize: '14px', marginLeft: '5px' }} /> {value}
                           </span>
@@ -57,15 +59,28 @@ const CustomTable = ({ columns, rows, page, rowsPerPage, onPageChange, onRowsPer
         </TableBody>
       </Table>
 
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={onPageChange}
-        onRowsPerPageChange={onRowsPerPageChange}
-      />
+      <Stack spacing={2} direction="row" justifyContent="flex-end" alignItems="center" padding="5px">
+        <Box>
+          <label>Show:</label>
+          <Select value={rowsPerPage} onChange={onRowsPerPageChange} className='select-pagination'>
+            <MenuItem value={5}>5</MenuItem>
+            <MenuItem value={10}>10</MenuItem>
+            <MenuItem value={25}>25</MenuItem>
+          </Select>
+        </Box>
+        <Pagination sx={{
+          '& .MuiPaginationItem-root': {
+            color: '#990099',
+          },
+          '& .Mui-selected': {
+            backgroundColor: 'lightgray',
+            color: '#fff',
+          },
+        }} count={Math.ceil(rows.length / rowsPerPage)}
+          page={page} onChange={onPageChange} defaultPage={1} siblingCount={1} boundaryCount={1}
+        />
+      </Stack>
+
     </TableContainer>
   );
 };

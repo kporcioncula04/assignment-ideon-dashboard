@@ -22,8 +22,9 @@ export default function StickyHeadTable() {
     // const selectThemeMode = useContext(ColorContext);
 
     //pagination
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [filteredRows, setFilteredRows] = useState(rows);
     const [selectedFilters, setSelectedFilters] = useState({
@@ -42,7 +43,7 @@ export default function StickyHeadTable() {
 
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(+event.target.value);
-        setPage(0);
+        setPage(1);
     };
 
     //filter
