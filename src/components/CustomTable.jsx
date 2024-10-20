@@ -36,9 +36,9 @@ const CustomTable = ({ columns, rows, page, rowsPerPage, onPageChange, onRowsPer
 
         <TableBody sx={{
           '& .MuiTableRow-root': {
-            backgroundColor: theme.palette.mode === 'light' ? colors.white[900] : colors.blue[500],
+            backgroundColor: theme.palette.mode === 'light' ? colors.white[800] : colors.blue[500],
             '&:hover': {
-              backgroundColor: theme.palette.mode === 'light' ? colors.white[500] : colors.gray[200],
+              backgroundColor: theme.palette.mode === 'light' ? colors.white[500] : colors.gray[400],
             },
           }
         }}>
@@ -55,7 +55,7 @@ const CustomTable = ({ columns, rows, page, rowsPerPage, onPageChange, onRowsPer
                   return (
                     <TableCell key={`${row.uuid}-${column.id}`} align={column.align} className='table-cell' >
                       {column.id === 'uuid' ? (
-                        <div className='uuid-container' style={{ color: '#990099' }}>
+                        <div className='uuid-container'>
                           <span>
                             <FileCopyIcon style={{ fontSize: '14px', marginLeft: '5px' }} /> {value}
                           </span>

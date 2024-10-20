@@ -174,6 +174,9 @@ export const themeSettings = (mode) => {
             h5: {
                 fontSize: 16
             },
+            p: {
+                fontSize: 14
+            }
 
         }
     }
