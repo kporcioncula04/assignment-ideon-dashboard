@@ -1,24 +1,24 @@
-import { Box, Button, Drawer } from '@mui/material';
+import { Box, Button, Drawer, Typography, useTheme } from '@mui/material';
 import { useState } from 'react';
 import { mockData } from '../data/mockData';
-
+import { tokens } from '../themes'
 
 import FilterSaved from './FilterSaved';
 import FiltersApply from './FiltersApply'
 
 function FilterDrawer({ isDrawerOpen, toggleDrawer, onApplyFilter }) {
+    const theme = useTheme();
+    const colors = tokens.apply(theme.palette.mode);
+
     const [selectedOrg, setSelectedOrg] = useState([]);
     const [selectedCarriers, setSelectedCarriers] = useState([]);
     const [distributionFormat, setDistributionFormat] = useState('');
-
     const [selectStartDate, setStartDate] = useState(null)
     const [dateStartType, setStartDateType] = useState('');
-
     const [selectEndDate, setEndDate] = useState(null)
     const [dateEndType, setEndDateType] = useState('');
 
     const [isSaveFilterOpen, setIsSaveFilterOpen] = useState(false);
-
     const [currentView, setCurrentView] = useState('filters')
     const [savedFilters, setSavedFilters] = useState([])
     const [currentFilter, setCurrentFilter] = useState(null)
@@ -32,7 +32,7 @@ function FilterDrawer({ isDrawerOpen, toggleDrawer, onApplyFilter }) {
         const filterExists = savedFilters.some((filter) => filter.name === newFilter.name);
         if (filterExists) {
             alert("A filter with this name already exists. Please choose a different name.");
-            return; // Exit if the name already exists
+            return;
         }
 
         let updatedFilters = savedFilters;
@@ -109,12 +109,15 @@ function FilterDrawer({ isDrawerOpen, toggleDrawer, onApplyFilter }) {
 
 
     return (
-        <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer(false)}>
-            <Box >
-                <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                    <Button variant="outlined" onClick={() => setCurrentView('filters')}>Filters</Button>
-                    <Button variant="outlined" onClick={() => setCurrentView('saved')} >Saved Filters</Button>
+        <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer(false)} >
+            <Box sx={{ backgroundColor: colors.gray[900] }}>
+                <Typography variant="h3" sx={{ padding: '20px' }}>Select Filters</Typography>
+
+                <Box sx={{ display: 'flex', flexDirection: 'row', padding: '20px', paddingTop: '0px', paddingBottom: '0px' }}>
+                    <Button variant="text" className='select-filter-button' onClick={() => setCurrentView('filters')}>Filters</Button>
+                    <Button variant="text" className='select-filter-button' onClick={() => setCurrentView('saved')} >Saved Filters</Button>
                 </Box>
+                <hr style={{ margin: '0px' }} />
 
                 {
                     currentView === 'filters' ? (

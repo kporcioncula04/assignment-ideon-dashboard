@@ -38,3 +38,16 @@ body,
   border-radius: 4px;
   height: 35px
 }
+
+/* Filter Drawer */
+
+.select-filter-button {
+  border-bottom: 2px solid transparent;
+  color: black;
+  transition: all 0.3s ease;
+}
+
+.select-filter-button:hover {
+  border-bottom: 2px solid purple;
+  color: purple;
+}
