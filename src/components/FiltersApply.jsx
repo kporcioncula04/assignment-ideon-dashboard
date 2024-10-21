@@ -36,7 +36,7 @@ function FiltersApply({ selectedOrg,
     ];
 
     return (
-        <Box sx={{ width: 350, padding: '20px' }}>
+        <Box sx={{ width: 350, p: 2 }}>
             <FormControl sx={{ m: 1, width: 250 }}>
                 <FormLabel>Organization Name</FormLabel>
                 <Select
@@ -226,14 +226,14 @@ function FiltersApply({ selectedOrg,
 
                 </Select>
             </FormControl>
-            <Box sx={{ display: 'flex', alignItems: 'right', justifyContent: 'right' }}>
-                <Button variant="contained" onClick={saveFilter} style={{ width: '45%' }}>Save filter</Button>
+            <Box className='save-filter-button'>
+                <Button variant="outlined" onClick={saveFilter} style={{ width: '35%' }}>Save filter</Button>
                 {isSaveFilterOpen && <FilterSaved />}
             </Box>
 
-            <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
-                <Button variant="outlined" onClick={handleReset} style={{ width: '49%' }}>Reset</Button>
-                <Button variant="contained" onClick={applyFilter} color="secondary" style={{ width: '49%' }}>Apply Filter</Button>
+            <Box sx={{ display: 'flex', justifyContent: 'space-around', pt: 5 }}>
+                <Button variant="outlined" onClick={handleReset} style={{ width: '45%' }}>Reset</Button>
+                <Button variant="contained" onClick={applyFilter} style={{ width: '45%', backgroundColor: '#660066' }}>Apply Filter</Button>
             </Box>
         </Box>
     )

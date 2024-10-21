@@ -82,7 +82,7 @@ const CustomTable = ({ columns, rows, page, rowsPerPage, onPageChange, onRowsPer
         </Box>
         <Pagination sx={{
           '& .MuiPaginationItem-root': {
-            color: '#990099',
+            color: '#660066',
           },
           '& .Mui-selected': {
             backgroundColor: 'lightgray',
