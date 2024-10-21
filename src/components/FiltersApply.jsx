@@ -1,10 +1,12 @@
-import { Box, FormControl, FormLabel, Select, MenuItem, Checkbox, ListItemText, OutlinedInput, RadioGroup, FormControlLabel, Radio, Button } from '@mui/material';
-
+import {
+    Box, FormControl, FormLabel,
+    Select, MenuItem, Checkbox, ListItemText, OutlinedInput, RadioGroup,
+    FormControlLabel, Radio, Button, TextField
+} from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { TextField } from '@mui/material';
-
+import '../index.css'
 
 function FiltersApply({ selectedOrg,
     handleOrganizationSelectChange,
@@ -43,7 +45,12 @@ function FiltersApply({ selectedOrg,
                     onChange={handleOrganizationSelectChange}
                     input={<OutlinedInput />}
                     renderValue={(selected) => selected.join(', ')}
-                    sx={{ width: '300px' }}
+                    sx={{
+                        '.MuiSelect-select': {
+                            padding: '10px',
+                        },
+                        width: '300px'
+                    }}
                 >
                     {mockData.map((org) => (
                         <MenuItem key={org.uuid} value={org.organization_name} sx={{ maxHeight: 400, overflow: 'auto' }}>
@@ -58,20 +65,35 @@ function FiltersApply({ selectedOrg,
                 <FormLabel>Group</FormLabel>
                 <Select
                     multiple
+
                     // value={0}
                     // onChange={handleSelectChange}
                     input={<OutlinedInput />}
                     renderValue={(selected) => selected.join(', ')}
-                    sx={{ width: '300px' }}
+                    sx={{
+                        '.MuiSelect-select': {
+                            padding: '10px',
+                        },
+                        width: '300px'
+                    }}
                 >
                 </Select>
             </FormControl>
 
             <FormControl sx={{ m: 1, minWidth: 120 }}>
                 <FormLabel>Coverage Start Date</FormLabel>
-                <Box sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                <Box className='coverage-dates-main '>
                     <Box>
-                        <Select native value={dateStartType} onChange={handleStartDateTypeChange} sx={{ minWidth: '150px' }}>
+                        <Select native value={dateStartType} onChange={handleStartDateTypeChange}
+                            sx={{
+                                '.MuiNativeSelect-select': {
+                                    padding: '10px',
+                                },
+                                '& .MuiInputBase-input': {
+                                    padding: '10px',
+                                },
+                                width: '145px'
+                            }}>
                             <option aria-label="None" value="" />
                             {dateStartOptions.map((option) => (
                                 <option key={option.value} value={option.value}>
@@ -85,7 +107,18 @@ function FiltersApply({ selectedOrg,
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker value={selectStartDate}
                                 onChange={setStartDate}
-                                slots={{ textField: (params) => <TextField {...params} /> }}
+                                slots={{
+                                    textField: (params) => <TextField {...params}
+                                        sx={{
+                                            '.MuiInputBase-root': {
+                                                height: '40px',
+                                            },
+                                            '.MuiInputBase-input': {
+                                                padding: '5px',
+                                            },
+                                            width: '145px'
+                                        }} />
+                                }}
                             />
 
                         </LocalizationProvider>
@@ -95,11 +128,18 @@ function FiltersApply({ selectedOrg,
 
             <FormControl sx={{ m: 1, minWidth: 120 }}>
                 <FormLabel>Coverage End Date</FormLabel>
-                {/* {console.log('end', selectEndDate)} */}
-
-                <Box sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                <Box className='coverage-dates-main'>
                     <Box>
-                        <Select native value={dateEndType} onChange={handleEndDateTypeChange} sx={{ minWidth: '150px' }}>
+                        <Select native value={dateEndType} onChange={handleEndDateTypeChange}
+                            sx={{
+                                '.MuiNativeSelect-select': {
+                                    padding: '10px',
+                                },
+                                '& .MuiInputBase-input': {
+                                    padding: '10px',
+                                },
+                                width: '145px'
+                            }}>
                             <option aria-label="None" value="" />
                             {dateStartOptions.map((option) => (
                                 <option key={option.value} value={option.value}>
@@ -113,7 +153,19 @@ function FiltersApply({ selectedOrg,
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker value={selectEndDate}
                                 onChange={setEndDate}
-                                slots={{ textField: (params) => <TextField {...params} /> }} />
+                                slots={{
+                                    textField: (params) => <TextField {...params}
+                                        sx={{
+                                            '.MuiInputBase-root': {
+                                                height: '40px',
+                                            },
+                                            '.MuiInputBase-input': {
+                                                padding: '5px',
+                                            },
+                                            width: '145px'
+                                        }} />
+                                }}
+                            />
                         </LocalizationProvider>
                     </Box>
                 </Box>
@@ -124,9 +176,9 @@ function FiltersApply({ selectedOrg,
                 <RadioGroup
                     row
                     aria-labelledby="demo-row-radio-buttons-group-label"
-                    name="row-radio-buttons-group"
                     value={distributionFormat}
                     onChange={handleDistributionChange}
+                    sx={{ display: 'flex', justifyContent: 'space-between' }}
                 >
                     <FormControlLabel value="EDI" control={<Radio />} label="EDI" />
                     <FormControlLabel value="API" control={<Radio />} label="API" />
@@ -140,7 +192,12 @@ function FiltersApply({ selectedOrg,
                     value={selectedCarriers}
                     onChange={handleCarrierSelectChange}
                     input={<OutlinedInput />}
-                    sx={{ width: '300px' }}
+                    sx={{
+                        '.MuiSelect-select': {
+                            padding: '10px',
+                        },
+                        width: '300px'
+                    }}
                     renderValue={(selected) => selected.join(', ')}>
                     {[...new Set(mockData.map((org) => org.carrier))].map((carrier) => (
                         <MenuItem key={carrier} value={carrier}>
@@ -158,9 +215,14 @@ function FiltersApply({ selectedOrg,
                     multiple
                     // value={0}
                     // onChange={handleSelectChange}
-                    sx={{ width: '300px' }}
                     input={<OutlinedInput />}
-                    renderValue={(selected) => selected.join(', ')} >
+                    renderValue={(selected) => selected.join(', ')}
+                    sx={{
+                        '.MuiSelect-select': {
+                            padding: '10px',
+                        },
+                        width: '300px'
+                    }} >
 
                 </Select>
             </FormControl>

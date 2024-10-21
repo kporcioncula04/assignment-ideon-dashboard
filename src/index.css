@@ -51,3 +51,10 @@ body,
   border-bottom: 2px solid purple;
   color: purple;
 }
+
+/* Filters Apply */
+.coverage-dates-main {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 10px
+}
