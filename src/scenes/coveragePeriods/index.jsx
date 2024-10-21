@@ -105,7 +105,7 @@ export default function StickyHeadTable() {
                     <Box style={{ display: 'flex', alignItems: 'row', justifyContent: 'space-around', gap: '5px' }}>
                         <Button variant="outlined" style={{ padding: 0, height: '37px', minWidth: '40px', backgroundColor: theme.palette.mode === 'light' ? colors.gray[900] : colors.gray[400] }} ><SettingsIcon style={{ height: '100%' }} /></Button>
                         <Button variant="outlined" className='function-buttons' style={{ backgroundColor: theme.palette.mode === 'light' ? colors.gray[900] : colors.gray[400] }}>Export CSV</Button>
-                        <TextField size="small" placeholder="Search Org or Carrier" variant="outlined" slotProps={{
+                        <TextField size="small" placeholder="Search Org or Carrier" variant="outlined" sx={{ backgroundColor: theme.palette.mode === 'light' ? colors.gray[900] : colors.gray[400] }} slotProps={{
                             input: {
                                 startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment>,
                             },
