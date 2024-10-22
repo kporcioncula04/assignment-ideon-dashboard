@@ -1,7 +1,7 @@
-React + Vite Assignment - Ideon App
+# React + Vite Assignment - Ideon App
 This repository provides a minimal setup for building a React application using Vite with hot module replacement (HMR) and basic ESLint configurations. Vite ensures fast builds, efficient HMR, and an overall excellent development experience with React.
 
-Project Setup
+# Project Setup
 This project uses the following plugins and tools:
 
 Vite: For fast and optimized development.
@@ -9,7 +9,7 @@ React: The popular JavaScript library for building user interfaces.
 @vitejs/plugin-react: Enables Fast Refresh and JSX support via Babel.
 ESLint: Provides linting rules to maintain code quality.
 
-Installation
+# Installation
 To get started with the project, ensure you have Node.js installed. Then follow the steps below:
 
 1. Clone the Repository
@@ -30,9 +30,27 @@ This will create an optimized build in the dist/ directory.
 To preview the production build locally, you can use the following command:
 npm run preview
 
+# Challenges and Tradeoffs
+Challenge: Implementing the main filter drawer and table functionality had some challenges, particularly in the design and functionality requirements. The filter drawer needed to be flexible to handle multiple filter options while ensuring ease of use. Also, the table needed to respond dynamically to user input, updating the data in real-time as filters were applied. The process required careful consideration of both the technical implementation and maintaining a seamless user experience, which made it a complex task to ensure both aspects were fully aligned.
 
-Project Structure
-Here's a basic overview of the project structure:
+Tradeoffs: Due to time constraints, my focuse was primarily on developing the table and drawer functionalities, ensuring they worked smoothly with the design because of this some additional features of the table, such as advanced sorting, export button, search from the main dashboard, pagination enhancements, were not fully implemented yet. These will be addressed in future iterations to improve overall functionality and user experience.
+
+## TODOs
+- **SideNav**: 
+  - Fix icons.
+- **Customer Dashboard**: 
+  - Implement export functionality.
+- **Table**: 
+  - Implement search functionality.
+  - Add filter function count.
+  - Design and show applied filters.
+  - Display "none" when no results are found.
+- **Drawer**: 
+  - Clean up functionality and design.
+
+
+# Project Structure
+Here's an overview of the project structure:
 .
 ├── public          # Static assets (icons, images)
 ├── src             # React components and app source files
@@ -65,7 +83,7 @@ Here's a basic overview of the project structure:
 ├── package.json    # Project dependencies and scripts
 └── vite.config.js  # Vite configuration
 
-Available Scripts
+# Available Scripts
 In the project directory, you can run the following scripts:
 npm run dev: Runs the app in development mode.
 npm run build: Builds the app for production.
