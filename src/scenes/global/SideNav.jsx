@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { tokens } from '../../themes';
 import ideonLogo from '/workspaces/assignment-ideon-dashboard/src/assets/ideon-logo.webp'
 
-import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
 import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined';
 import ImportContactsOutlinedIcon from '@mui/icons-material/ImportContactsOutlined';
 import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
@@ -20,6 +19,7 @@ import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
+import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 
 const NavItems = ({ title, to, icon, selectedNav, setSelectedNav }) => {
     const theme = useTheme()
@@ -68,10 +68,10 @@ function SideNav() {
                         </Box>
                     )}
 
-                    <Box paddingLeft={isCollapsed ? undefined : "0%"}>
-                        <Box>
+                    <Box>
+                        <Box sx={{ display: isCollapsed ? 'none' : 'block' }}>
                             <Box color="white" display="flex" justifyContent="center" alignItems="center" border="1px solid white" padding={1} margin={2} borderRadius={2}>
-                                Customer Dashboard <ArrowDropDownOutlinedIcon />
+                                Customer Dashboard <UnfoldLessIcon />
                             </Box>
                         </Box>
 

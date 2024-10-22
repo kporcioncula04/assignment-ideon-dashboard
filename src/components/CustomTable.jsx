@@ -1,5 +1,5 @@
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, useTheme, MenuItem, Select, Box } from '@mui/material';
-import { tokens } from '../themes'
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'; import { tokens } from '../themes'
 import { Pagination, Stack } from '@mui/material';
 
 import '../index.css'
@@ -11,7 +11,7 @@ const CustomTable = ({ columns, rows, page, rowsPerPage, onPageChange, onRowsPer
   return (
     <TableContainer className="table-container" sx={{
       '& .MuiTableCell-root': {
-        color: theme.palette.mode === 'light' ? colors.black[500] : colors.white[500], // Adjust text color based on mode
+        color: theme.palette.mode === 'light' ? colors.black[500] : colors.white[500],
       },
     }}>
       <Table stickyHeader aria-label="sticky table">
@@ -28,7 +28,12 @@ const CustomTable = ({ columns, rows, page, rowsPerPage, onPageChange, onRowsPer
                 align={column.align}
                 style={{ minWidth: column.minWidth, border: '0.2px solid lightgray' }}
               >
-                {column.label}
+                <Box sx={{ display: 'flex' }}>
+                  {column.label}
+                  <KeyboardArrowUpIcon />
+                </Box>
+
+
               </TableCell>
             ))}
           </TableRow>

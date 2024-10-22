@@ -1,11 +1,13 @@
 import {
     Box, FormControl, FormLabel,
     Select, MenuItem, Checkbox, ListItemText, OutlinedInput, RadioGroup,
-    FormControlLabel, Radio, Button, TextField
+    FormControlLabel, Radio, Button, TextField,
+    Typography, useTheme
 } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { tokens } from '../themes'
 import '../index.css'
 
 function FiltersApply({ selectedOrg,
@@ -29,16 +31,17 @@ function FiltersApply({ selectedOrg,
     isSaveFilterOpen,
     FilterSaved,
     saveFilter }) {
-
+    const theme = useTheme();
+    const colors = tokens.apply(theme.palette.mode);
     const dateStartOptions = [
         { value: 'before', label: 'Before' },
         { value: 'after', label: 'After' },
     ];
 
     return (
-        <Box sx={{ width: 350, p: 2 }}>
+        <Box sx={{ width: 350, p: 2, color: colors.black[500] }}>
             <FormControl sx={{ m: 1, width: 250 }}>
-                <FormLabel>Organization Name</FormLabel>
+                <FormLabel sx={{ color: colors.black[300] }}>Organization Name</FormLabel>
                 <Select
                     multiple
                     value={selectedOrg}
@@ -49,7 +52,8 @@ function FiltersApply({ selectedOrg,
                         '.MuiSelect-select': {
                             padding: '10px',
                         },
-                        width: '300px'
+                        width: '300px',
+                        border: '0.5px solid gray'
                     }}
                 >
                     {mockData.map((org) => (
@@ -62,10 +66,9 @@ function FiltersApply({ selectedOrg,
             </FormControl>
 
             <FormControl sx={{ m: 1, width: 250 }}>
-                <FormLabel>Group</FormLabel>
+                <FormLabel sx={{ color: colors.black[300] }}>Group</FormLabel>
                 <Select
                     multiple
-
                     // value={0}
                     // onChange={handleSelectChange}
                     input={<OutlinedInput />}
@@ -74,14 +77,15 @@ function FiltersApply({ selectedOrg,
                         '.MuiSelect-select': {
                             padding: '10px',
                         },
-                        width: '300px'
+                        width: '300px',
+                        border: '0.5px solid gray'
                     }}
                 >
                 </Select>
             </FormControl>
 
             <FormControl sx={{ m: 1, minWidth: 120 }}>
-                <FormLabel>Coverage Start Date</FormLabel>
+                <FormLabel sx={{ color: colors.black[300] }}>Coverage Start Date</FormLabel>
                 <Box className='coverage-dates-main '>
                     <Box>
                         <Select native value={dateStartType} onChange={handleStartDateTypeChange}
@@ -92,7 +96,8 @@ function FiltersApply({ selectedOrg,
                                 '& .MuiInputBase-input': {
                                     padding: '10px',
                                 },
-                                width: '145px'
+                                width: '145px',
+                                border: '1px solid lightgray'
                             }}>
                             <option aria-label="None" value="" />
                             {dateStartOptions.map((option) => (
@@ -105,7 +110,8 @@ function FiltersApply({ selectedOrg,
 
                     <Box>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DatePicker value={selectStartDate}
+                            <DatePicker
+                                value={selectStartDate}
                                 onChange={setStartDate}
                                 slots={{
                                     textField: (params) => <TextField {...params}
@@ -116,7 +122,9 @@ function FiltersApply({ selectedOrg,
                                             '.MuiInputBase-input': {
                                                 padding: '5px',
                                             },
-                                            width: '145px'
+                                            width: '145px',
+                                            border: '0.5px solid gray',
+                                            borderRadius: '4px'
                                         }} />
                                 }}
                             />
@@ -127,7 +135,7 @@ function FiltersApply({ selectedOrg,
             </FormControl>
 
             <FormControl sx={{ m: 1, minWidth: 120 }}>
-                <FormLabel>Coverage End Date</FormLabel>
+                <FormLabel sx={{ color: colors.black[300] }}>Coverage End Date</FormLabel>
                 <Box className='coverage-dates-main'>
                     <Box>
                         <Select native value={dateEndType} onChange={handleEndDateTypeChange}
@@ -138,7 +146,9 @@ function FiltersApply({ selectedOrg,
                                 '& .MuiInputBase-input': {
                                     padding: '10px',
                                 },
-                                width: '145px'
+                                width: '145px',
+                                border: '0.5px solid gray',
+                                borderRadius: '4px'
                             }}>
                             <option aria-label="None" value="" />
                             {dateStartOptions.map((option) => (
@@ -162,7 +172,9 @@ function FiltersApply({ selectedOrg,
                                             '.MuiInputBase-input': {
                                                 padding: '5px',
                                             },
-                                            width: '145px'
+                                            width: '145px',
+                                            border: '0.5px solid gray',
+                                            borderRadius: '4px'
                                         }} />
                                 }}
                             />
@@ -172,7 +184,7 @@ function FiltersApply({ selectedOrg,
             </FormControl>
 
             <FormControl sx={{ m: 1, width: 250 }}>
-                <FormLabel>Distribution Format</FormLabel>
+                <FormLabel sx={{ color: colors.black[300] }}>Distribution Format</FormLabel>
                 <RadioGroup
                     row
                     aria-labelledby="demo-row-radio-buttons-group-label"
@@ -186,7 +198,7 @@ function FiltersApply({ selectedOrg,
             </FormControl>
 
             <FormControl sx={{ m: 1, width: 250 }}>
-                <FormLabel>Carrier</FormLabel>
+                <FormLabel sx={{ color: colors.black[500] }}>Carrier</FormLabel>
                 <Select
                     multiple
                     value={selectedCarriers}
@@ -196,7 +208,8 @@ function FiltersApply({ selectedOrg,
                         '.MuiSelect-select': {
                             padding: '10px',
                         },
-                        width: '300px'
+                        width: '300px',
+                        border: '0.5px solid gray'
                     }}
                     renderValue={(selected) => selected.join(', ')}>
                     {[...new Set(mockData.map((org) => org.carrier))].map((carrier) => (
@@ -209,7 +222,7 @@ function FiltersApply({ selectedOrg,
             </FormControl>
 
             <FormControl sx={{ m: 1, width: 250 }}>
-                <FormLabel>State</FormLabel>
+                <FormLabel sx={{ color: colors.black[500] }}>State</FormLabel>
 
                 <Select
                     multiple
@@ -221,7 +234,8 @@ function FiltersApply({ selectedOrg,
                         '.MuiSelect-select': {
                             padding: '10px',
                         },
-                        width: '300px'
+                        width: '300px',
+                        border: '0.5px solid gray'
                     }} >
 
                 </Select>

@@ -119,22 +119,22 @@ export default function StickyHeadTable() {
 
                 {(selectedFilters.selectedOrg?.length > 0 || selectedFilters.selectedCarriers?.length > 0 ||
                     selectedFilters.distributionFormat || selectedFilters.selectStartDate || selectedFilters.selectEndDate) &&
-                    <Box style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                        <p>Company: {selectedFilters.selectedOrg?.length > 0
+                    <Box sx={{ display: 'flex', justifyContent: 'space-evenly', p: 3 }}>
+                        <div>Company: {selectedFilters.selectedOrg?.length > 0
                             ? selectedFilters.selectedOrg.join(', ')
-                            : 'None'} </p>
-                        <p>Carriers: {selectedFilters.selectedCarriers?.length > 0
+                            : 'None'} </div>
+                        <div>Carriers: {selectedFilters.selectedCarriers?.length > 0
                             ? selectedFilters.selectedCarriers.join(', ')
-                            : 'None'} </p>
-                        <p>Distribution Format: {selectedFilters.distributionFormat?.length > 0
+                            : 'None'} </div>
+                        <div>Distribution Format: {selectedFilters.distributionFormat?.length > 0
                             ? selectedFilters.distributionFormat.join(', ')
-                            : 'None'} </p>
-                        <p>Coverage Start Date: {selectedFilters.dateStartType} {selectedFilters.selectStartDate?.length > 0
+                            : 'None'} </div>
+                        <div>Coverage Start Date: {selectedFilters.dateStartType} {selectedFilters.selectStartDate?.length > 0
                             ? selectedFilters.selectStartDate
-                            : 'None'} </p>
-                        <p>Coverage End Date: {selectedFilters.dateEndType} {selectedFilters.selectEndDate?.length > 0
+                            : 'None'} </div>
+                        <div>Coverage End Date: {selectedFilters.dateEndType} {selectedFilters.selectEndDate?.length > 0
                             ? selectedFilters.selectEndDate
-                            : 'None'} </p>
+                            : 'None'} </div>
                     </Box>}
 
             </Box>

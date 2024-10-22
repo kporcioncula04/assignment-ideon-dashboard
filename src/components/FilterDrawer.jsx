@@ -111,7 +111,7 @@ function FilterDrawer({ isDrawerOpen, toggleDrawer, onApplyFilter }) {
     return (
         <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer(false)} >
             <Box sx={{ backgroundColor: colors.gray[900] }}>
-                <Typography variant="h3" sx={{ padding: '20px' }}>Select Filters</Typography>
+                <Typography variant="h3" sx={{ padding: '20px', color: colors.black[500] }}>Select Filters</Typography>
 
                 <Box sx={{ display: 'flex', flexDirection: 'row', padding: '20px', paddingTop: '0px', paddingBottom: '0px' }}>
                     <Button variant="text" className='select-filter-button' onClick={() => setCurrentView('filters')}>Filters</Button>
@@ -143,7 +143,8 @@ function FilterDrawer({ isDrawerOpen, toggleDrawer, onApplyFilter }) {
                             saveFilter={saveFilter} />
                     ) : (<FilterSaved onApplyFilter={onApplyFilter}
                         handleSaveFilterName={handleSaveFilterName}
-                        savedFilters={savedFilters} />)
+                        savedFilters={savedFilters}
+                        setSavedFilters={setSavedFilters} />)
                 }
 
             </Box>

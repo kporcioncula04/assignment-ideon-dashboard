@@ -1,9 +1,13 @@
-import { Box, TextField, FormGroup, FormControlLabel, Checkbox, Button, Typography } from '@mui/material/';
+import { Box, TextField, FormGroup, FormControlLabel, Checkbox, Button, Typography, useTheme } from '@mui/material/';
+import { tokens } from '../themes'
 import { useState } from 'react';
 
-function FilterSaved({ handleSaveFilterName, savedFilters }) {
+function FilterSaved({ handleSaveFilterName, savedFilters, setSavedFilters }) {
   const [filterName, setFilterName] = useState('');
   const [defaultFilter, setDefaultFilter] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState(null);
+  const theme = useTheme();
+  const colors = tokens.apply(theme.palette.mode);
 
   const handleSave = () => {
     const savedFilter = {
@@ -11,11 +15,27 @@ function FilterSaved({ handleSaveFilterName, savedFilters }) {
       default: defaultFilter
     }
     handleSaveFilterName(savedFilter)
+    setFilterName('')
+    setDefaultFilter(false)
   }
-  return (
 
+  const handleDeleteFilter = (currFilter) => {
+    const updatedFilters = savedFilters.filter(filter => filter.name !== currFilter.name)
+    setSavedFilters(updatedFilters);
+    setSelectedFilter(null)
+  }
+
+  const handleSetAsDefault = (setFilter) => {
+    const updatedFilters = savedFilters.map((filter) =>
+      filter.name === setFilter.name ? { ...filter, default: true } : { ...filter, default: false }
+    );
+    setSavedFilters(updatedFilters);
+    setSelectedFilter(setFilter);
+  };
+
+  return (
     <Box
-      sx={{ width: 350, height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
+      sx={{ width: 350, height: '90vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', color: colors.black[500] }}
     >
       <Box sx={{ p: 2, pb: 0 }}>
         <Typography variant='p'>Name</Typography>
@@ -26,11 +46,19 @@ function FilterSaved({ handleSaveFilterName, savedFilters }) {
           '.MuiInputBase-input': {
             padding: '5px',
           },
-          width: '300px'
+          width: '300px',
+          border: '1px solid black',
+          borderRadius: '5px'
         }} />
 
         <FormGroup>
           <FormControlLabel control={<Checkbox
+            sx={{
+              '& .MuiSvgIcon-root': {
+                border: '2px solid lightgray',
+                borderRadius: '4px',
+              }
+            }}
             checked={defaultFilter}
             onChange={(e) => setDefaultFilter(e.target.checked)} />} label={
               <div style={{ padding: '10px', paddingLeft: 0 }}>
@@ -43,41 +71,52 @@ function FilterSaved({ handleSaveFilterName, savedFilters }) {
         </FormGroup>
       </Box>
 
-
       <Box sx={{ mt: 2 }}>
         <Box sx={{ height: '100%' }}>
-          <Typography variant='h4' sx={{ p: 1, pl: 2, pt: 0 }}>Saved Filters</Typography>
-          <hr style={{}} />
+          <Typography variant='h4' sx={{ p: 1, pl: 2, pt: 0, color: colors.black[500] }}>Saved Filters</Typography>
+          <hr />
 
           <ul style={{ display: 'flex', flexDirection: 'column', padding: 0, listStyleType: 'none', height: '100%' }}>
-            {savedFilters.map((filter, index) => (
-              <li key={index} style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: '8px',
-                backgroundColor: filter.default ? 'pink' : 'transparent',
-                // border: filter.default ? '1px solid #660066' : '1px solid transparent',
-                // borderRadius: '4px',
-                marginBottom: '8px'
-              }}>
-                <strong>{filter.name}</strong>{filter.default && <span
+            {savedFilters && savedFilters.map((filter, index) => (
+              <li key={index}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '5px',
+                  paddingLeft: '10px',
+                  backgroundColor: selectedFilter?.name === filter.name ? "#e0e0e0" : (filter.default ? '#ffe6ff' : 'transparent'),
+                  marginBottom: '8px'
+                }}
+                onClick={() => setSelectedFilter(filter)}>
+                <p>{filter.name}</p>
+                {filter.default ? (<span
                   style={{
-                    // padding: '5px',
                     display: 'inline-block',
-                    width: '60px',
+                    width: '70px',
                     height: '30px',
                     lineHeight: '30px',
                     borderRadius: '20px',
-                    backgroundColor: 'transparent',
                     color: 'black',
                     textAlign: 'center',
-                    border: '1px solid purple'
-                    // fontSize: '12px',
-                  }}
-                >
-                  Default
-                </span>}
+                    border: '1px solid #660066'
+                  }}>
+                  Default </span>) : (
+                  selectedFilter?.name == filter.name && (
+                    <>
+                      <Box>
+                        <Button variant="outlined" onClick={() => handleSetAsDefault(filter)} sx={{ marginRight: '8px', border: '1px solid lightgray', backgroundColor: 'white' }}>
+                          Make as default
+                        </Button>
+                        <Button variant="outlined" onClick={() => handleDeleteFilter(filter)} sx={{ color: 'red', border: '1px solid lightgray', backgroundColor: 'white' }}>
+                          Delete
+                        </Button>
+                      </Box>
+
+                    </>
+                  )
+                )
+                }
               </li>
             ))}
           </ul>
@@ -90,7 +129,7 @@ function FilterSaved({ handleSaveFilterName, savedFilters }) {
           <Button variant="contained" fullWidth onClick={handleSave} sx={{ backgroundColor: '#660066' }}>Save</Button>
         </Box>
       </Box>
-    </Box>
+    </Box >
   )
 }
 
