@@ -4,7 +4,7 @@ import { Box, IconButton, useTheme, Typography } from '@mui/material'
 import "react-pro-sidebar/dist/css/styles.css";
 import { Link } from "react-router-dom";
 import { tokens } from '../../themes';
-import ideonLogo from '/workspaces/assignment-ideon-dashboard/src/assets/ideon-logo.webp'
+import ideonLogo from '../../assets/ideon-logo.webp'
 
 import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined';
 import ImportContactsOutlinedIcon from '@mui/icons-material/ImportContactsOutlined';
