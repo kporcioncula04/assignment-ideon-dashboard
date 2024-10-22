@@ -8,6 +8,7 @@ Vite: For fast and optimized development.
 React: The popular JavaScript library for building user interfaces.
 @vitejs/plugin-react: Enables Fast Refresh and JSX support via Babel.
 ESLint: Provides linting rules to maintain code quality.
+Netlify: for fast build and deploy
 
 ## Installation
 To get started with the project, ensure you have Node.js installed. Then follow the steps below:
@@ -39,6 +40,11 @@ This will create an optimized build in the dist/ directory.
 To preview the production build locally, you can use the following command:
 ```bash
 npm run preview
+```
+
+## To view the deployed app visit:
+```
+https://ideon-dashboard-assignment.netlify.app/coveragePeriods
 ```
 
 ## Challenges and Tradeoffs
