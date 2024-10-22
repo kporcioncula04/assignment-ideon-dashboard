@@ -1,5 +1,8 @@
 /*
-  Basic-Auth: admin:admin123
+  Basic-Auth: username:password
 
-/*
-  Basic-Auth: username:admin
+/specific-path/*
+  Basic-Auth: user1:password1
+
+/another-path/*
+  Basic-Auth: user2:password2
